@@ -1,112 +1,101 @@
 package com.maestrocorona.appferia
 
-//En este apartado se encuentra cada una de las importaciones de las cuales de van
-//extrayendo los recursos necesarios para cada una de las funciones que se han estado
-//pues implementando.
-
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import android.os.Bundle  // Importa la clase Bundle para manejar el estado de la actividad
+import androidx.activity.ComponentActivity  // Importa la clase base para actividades de Compose
+import androidx.activity.compose.setContent  // Importa la función para configurar el contenido de la actividad
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.Image  // Importa la función para mostrar imágenes
+import androidx.compose.foundation.layout.* // Importa funciones de diseño (Column, Row, etc.)
+import androidx.compose.material3.* // Importa componentes de Material Design 3
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.Modifier  // Importa la clase Modifier para modificar la apariencia de los componentes
+import androidx.compose.ui.graphics.Color  // Importa la clase Color para definir colores
+import androidx.compose.ui.res.painterResource  // Importa la función para cargar imágenes desde recursos
+import androidx.compose.ui.text.font.FontFamily  // Importa la clase FontFamily para definir fuentes
 import androidx.compose.ui.unit.dp
-import android.content.Intent
-import androidx.compose.ui.tooling.preview.Preview
+import android.content.Intent  // Importa la clase Intent para iniciar otras actividades
+import androidx.compose.ui.tooling.preview.Preview  // Importa la anotación para previsualizar composables
 
-
-//Esta es la pantalla principal de la aplicación.
-//cada vez que esta se apertura, esta es la primera clase que se ejecuta.
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class MainActivity : ComponentActivity() {  // Define la actividad principal de la aplicación
+    override fun onCreate(savedInstanceState: Bundle?) {  // Se llama cuando se crea la actividad
+        super.onCreate(savedInstanceState)  // Llama al método onCreate de la superclase
         enableEdgeToEdge()
-        setContent {
-            MainScreen(onNavigateToSecondActivity = {
-                startActivity(Intent(this, Activity2::class.java))
+        setContent {  // Configura el contenido de la actividad usando Compose
+            MainScreen(onNavigateToSecondActivity = {  // Llama a la función MainScreen y le pasa una lambda
+                startActivity(Intent(this, Activity2::class.java))  // Inicia la actividad Activity2 cuando se llama a la lambda
             })
         }
     }
 }
-//Indica que MainScreenes una función componible, es decir, define una UI en Jetpack Compose.
-@Composable
-//Es la función principal de la pantalla. Recibe una función onNavigateToSecondActivitycomo parámetro, que se ejecutará cuando el usuario presione el botón.
-fun MainScreen(onNavigateToSecondActivity: () -> Unit) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    )
-    {
 
-        Column( // Organiza los elementos en una columna.
+@Composable  // Indica que esta función es un composable
+fun MainScreen(onNavigateToSecondActivity: () -> Unit) {  // Define la función que genera la UI principal
+    Surface(  // Crea una superficie (fondo) para la UI
+        modifier = Modifier.fillMaxSize(),  // Ocupa todo el espacio disponible
+        color = MaterialTheme.colorScheme.background  // Usa el color de fondo del tema actual
+    ) {
+        Column(  // Organiza los elementos en una columna vertical
             modifier = Modifier
-                .fillMaxSize() // Hace que la columna ocupe el espacio disponible
-                .padding(16.dp), //Agrega un margen interno
-            horizontalAlignment = Alignment.CenterHorizontally, //Centra los elementos en el eje horizontal.
-            verticalArrangement = Arrangement.spacedBy(16.dp) //Separa los elementos con un espacio
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,  // Alinea los elementos al centro horizontalmente
+            verticalArrangement = Arrangement.spacedBy(16.dp)  // Agrega un espacio de 16dp entre los elementos
         ) {
-            BusinessItem("Negocios de la Nave 1") //Muestra diferentes elementos en la pantalla
+            // Agrega cuatro elementos BusinessItem con diferentes textos
+            BusinessItem("Negocios de la Nave 1")
             BusinessItem("Negocios de la Nave 2")
             BusinessItem("Negocios de la Nave 3")
             BusinessItem("Atracciones y conciertos")
 
-            Button( //Define un botón interactivo
-                onClick = onNavigateToSecondActivity,
+            Button(  // Crea un botón
+                onClick = onNavigateToSecondActivity,  // Ejecuta la lambda onNavigateToSecondActivity al hacer clic
                 modifier = Modifier.padding(top = 16.dp)
             ) {
-                Text("Fechas importantes", fontFamily = FontFamily.SansSerif)
+                Text("Fechas importantes", fontFamily = FontFamily.SansSerif)  // Muestra el texto "Fechas importantes" con la fuente SansSerif
             }
         }
     }
 }
-//Define una función composable llamada BusinessItem
-@Composable
-fun BusinessItem(text: String) {
-    val purpleLight = Color(0xFF6650a4) //Define dos variables de color, purpleLight y purpleDark
-    val purpleDark = Color(0xFFD0BCFF)
 
-    Card( //Crea un componente Card, que es un contenedor
+@Composable  // Indica que esta función es un composable
+fun BusinessItem(text: String) {  // Define la función que genera un elemento de negocio
+    val purpleLight = Color(0xFF6650a4)  // Define un color morado claro
+    val purpleDark = Color(0xFFD0BCFF)  // Define un color morado oscuro (no se usa en este código)
+
+    Card(  // Crea una tarjeta
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = purpleLight,
-            contentColor = Color.White
+        colors = CardDefaults.cardColors(  // Define los colores de la tarjeta
+            containerColor = purpleLight,  // Usa el color morado claro como color de fondo
+            contentColor = Color.White  // Usa el color blanco para el contenido
         )
     ) {
-        Row( //Crea un componente Row, que organiza sus elementos secundarios en una fila horizontal.
+        Row(  // Organiza los elementos en una fila horizontal
             modifier = Modifier
-                .fillMaxSize() //hace que la fila ocupe  el espacio disponible
+                .fillMaxSize()
                 .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically //Alinea los elementos  de la fila verticalmente al centro
+            verticalAlignment = Alignment.CenterVertically  // Alinea los elementos al centro verticalmente
         ) {
-            Image( //Crea un componente Image para mostrar una imagen.
-                painter = painterResource(id = R.drawable.logo_rest),
+            Image(  // Muestra una imagen
+                painter = painterResource(id = R.drawable.logo_rest),  // Carga la imagen desde el recurso "logo_rest"
                 contentDescription = "Logo restaurante",
                 modifier = Modifier
-                    .size(100.dp)
-                    .padding(8.dp)
+                    .size(100.dp)  // Define el tamaño de la imagen a 100dp x 100dp
+                    .padding(8.dp)  // Agrega un padding de 8dp alrededor de la imagen
             )
-            Text( //Crea un componente Text para mostrar texto.
-
-                text = text,
-                modifier = Modifier.padding(8.dp),
-                fontFamily = FontFamily.SansSerif
+            Text(  // Muestra un texto
+                text = text,  // Muestra el texto pasado como argumento
+                modifier = Modifier.padding(8.dp),  // Agrega un padding de 8dp alrededor del texto
+                fontFamily = FontFamily.SansSerif  // Usa la fuente SansSerif
             )
         }
     }
 }
-//En esta parte solo se utiliza lo que es el PREVIEW para visualizar la
-//aplicacion sin necesidad de ejecutarla.
-@Preview(showBackground = true)
-@Composable
-fun PreviewMainScreen() {
-    MainScreen(onNavigateToSecondActivity = {})
+
+@Preview(showBackground = true)  // Indica que esta función es una vista previa y muestra el fondo
+@Composable  // Indica que esta función es un composable
+fun PreviewMainScreen() {  // Define una vista previa de la UI principal
+    MainScreen(onNavigateToSecondActivity = {})  // Llama a MainScreen con una lambda vacía para el parámetro onNavigateToSecondActivity
 }
